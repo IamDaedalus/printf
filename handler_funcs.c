@@ -63,12 +63,12 @@ void handle_char(va_list args)
  */
 void handle_num(va_list args)
 {
-	int num = va_arg(args, int),i = 0;
+	int num = va_arg(args, int), i = 0;
 	/*
 	 * you can use int or char if you want
 	 * 10 is because int_max is exactly 10 digits minus the sign
 	 */
-	char arr[10]; 
+	char arr[10];
 
 	/*
 	 * check if the number is less than or equal to zero and perform

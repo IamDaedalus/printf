@@ -1,6 +1,11 @@
 #include <stdarg.h>
 #include "main.h"
 
+/**
+ * _printf - a mostly 1:1 clone of _printf
+ * @format: the text and it's formats
+ * Return: returns the count in format
+ */
 int _printf(const char *format, ...)
 {
 	va_list list;
@@ -13,7 +18,8 @@ int _printf(const char *format, ...)
 		{
 			i++; /* move the iterator to the next letter (the modifier) now */
 
-			/* moved everything here because checking every modifier
+			/*
+			 * moved everything here because checking every modifier
 			 * would have exceeded the 50line limit for functions
 			 */
 			init_mod_check(format[i], list);

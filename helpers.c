@@ -12,7 +12,7 @@ void mod_check(va_list list, func mod)
 	if (mod)
 	{
 		/* this just a function pointer that returns the appropriate function*/
-		mod(list); 
+		mod(list);
 	}
 }
 
