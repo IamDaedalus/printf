@@ -61,17 +61,8 @@ void handle_char(va_list args, int *count)
 {
 	char c = (char)va_arg(args, int);
 
-	if (c == '%')
-	{
-		_putchar('\\');
-		_putchar('%');
-		(*count) += 2;
-	}
-	else
-	{
-		_putchar(c);
-		(*count) += 1;
-	}
+	_putchar(c);
+	(*count) += 1;
 }
 
 /**
