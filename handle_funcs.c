@@ -21,7 +21,6 @@ func get_mod_function(char c)
 		{ '%', handle_char },
 	};
 
-	/* the length of th array */
 	modifiers_len = sizeof(modifiers) / sizeof(modifiers[0]);
 	while (i < modifiers_len)
 	{
@@ -48,7 +47,7 @@ void handle_str(va_list args, int *count)
 	{
 		_putchar(*s);
 		s++;
-		(*count) += 1;
+		*(count) += 1;
 	}
 }
 
@@ -57,10 +56,22 @@ void handle_str(va_list args, int *count)
  * @args: the variadic args
  * @count: this is a pointer to the original count variable in _printf
  */
+
 void handle_char(va_list args, int *count)
 {
-	_putchar((char)va_arg(args, int));
-	(*count) += 1;
+	char c = (char)va_arg(args, int);
+
+	if (c == '%')
+	{
+		_putchar('\\');
+		_putchar('%');
+		(*count) += 2;
+	}
+	else
+	{
+		_putchar(c);
+		(*count) += 1;
+	}
 }
 
 /**
@@ -68,27 +79,35 @@ void handle_char(va_list args, int *count)
  * @args: the variadic args
  * @count: this is a pointer to the original count variable in _printf
  */
+
 void handle_num(va_list args, int *count)
 {
-	int num = va_arg(args, int);
+	int num = va_arg(args, int), i = 0;
+
 	char arr[10];
-	int i;
 
 	if (num < 0)
 	{
 		_putchar('-');
 		num = -num;
 	}
+	if (num == 0)
+	{
+		_putchar(num);
+		return;
+	}
 
-	for (i = 0; num; i++)
+
+	while (num != 0)
 	{
 		arr[i] = '0' + (num % 10);
 		num /= 10;
+		i++;
 	}
 
-	for (i--; i >= 0; i--)
+	while (i > 0)
 	{
-		_putchar(arr[i]);
-		(*count) += 1;
+		_putchar(arr[--i]);
+		*(count) += 1;
 	}
 }
