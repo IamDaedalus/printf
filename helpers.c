@@ -1,114 +1,29 @@
 #include "main.h"
 #include <stdarg.h>
-#include <stdlib.h>
 
 /**
- * get_mod_function - returns a function pointer to the appropriate
- * function for the modifier c
- * @c: the modifier as a char
- * Return: returns the function pointer to the associated func
+ * mod_check - checks if the func returns an actual function pointer
+ * @args: the variadic list of functions that we pass to associataed methods
+ * @mod: the function pointer data type variable
+ * @count: a pointer to the original printf count
  */
-func get_mod_function(char c)
+void mod_check(va_list args, func mod, int *count)
 {
-	int i = 0;
-	int modifiers_len = 0;
-
-	modifier modifiers[] = {
-		{ 's', handle_str },
-		{ 'c', handle_char },
-		{ 'd', handle_num },
-		{ 'i', handle_num },
-		{ '%', handle_char },
-	};
-
-	/* the length of th array */
-	modifiers_len = sizeof(modifiers) / sizeof(modifiers[0]);
-	while (i < modifiers_len)
-	{
-		if (modifiers[i].modifier == c)
-			return (modifiers[i].method);
-
-		i++;
-	}
-
-	return (NULL);
+	if (mod)
+		mod(args, count);
 }
 
 /**
- * handle_str - handles %s
- * @args: the variadic args
- * @count: this is a pointer to the original count variable in _printf
+ * init_mod_check - initialises modifier checks when called
+ * @ch: the modifier as a character
+ * @list: the variadic list of functions that we pass to associataed methods
+ * @count: a pointer to the original printf count
  */
-void handle_str(va_list args, int *count)
+void init_mod_check(const char ch, va_list list, int *count)
 {
-	char *s;
+	func mod;
 
-	s = va_arg(args, char *);
-	while (*s)
-	{
-		_putchar(*s);
-		s++;
-		*(count) += 1;
-	}
+	mod = get_mod_function(ch);
+	mod_check(list, mod, count);
+
 }
-
-/**
- * handle_char - handles %c
- * @args: the variadic args
- * @count: this is a pointer to the original count variable in _printf
- */
-void handle_char(va_list args, int *count)
-{
-	_putchar((char)va_arg(args, int));
-	*(count) += 1;
-}
-
-/**
- * handle_num - handles both %i and %d
- * @args: the variadic args
- * @count: this is a pointer to the original count variable in _printf
- */
-void handle_num(va_list args, int *count)
-{
-	int num = va_arg(args, int), i = 0;
-	/*
-	 * you can use int or char if you want
-	 * 10 is because int_max is exactly 10 digits minus the sign
-	 */
-	char arr[10];
-
-	/*
-	 * check if the number is less than or equal to zero and perform
-	 * necessary operations
-	 */
-	if (num < 0)
-	{
-		_putchar('-');
-		num = -num;
-	}
-	if (num == 0)
-	{
-		_putchar(num);
-		return;
-	}
-
-	/*
-	 * this basically stores the last digit to the array above
-	 * and converts it to an int
-	 */
-	while (num != 0)
-	{
-		arr[i] = '0' + (num % 10); /* conversion to number is here */
-		/*_putchar('0' + (num % 10));*/
-		num /= 10;
-		i++;
-	}
-
-	/* print the array from back to front */
-	while (i > 0)
-	{
-		_putchar(arr[--i]);
-		*(count) += 1;
-	}
-}
-

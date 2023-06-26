@@ -20,17 +20,11 @@ int _printf(const char *format, ...)
 			if (format[i] == '%')
 			{
 				i++;
-				func handler = get_mod_function(format[i]);
 
-				if (handler)
-				{
-					handler(list, &count);
-				}
-				else
-				{
-					/* handle the % character */
-					handle_char(list, &count);
-				}
+				if (format[i] == '%')
+					_putchar('%');
+
+				init_mod_check(format[i], list, &count);
 			}
 			else
 			{
