@@ -55,7 +55,7 @@ void handle_str(va_list args, int *count)
 /**
  * handle_char - handles %c
  * @args: the variadic args
- * @count: this is a pointer to the original count variable in _printf
+ * @count: this is a pointer to the original count var in _printf
  */
 void handle_char(va_list args, int *count)
 {
@@ -66,13 +66,13 @@ void handle_char(va_list args, int *count)
 /**
  * handle_num - handles both %i and %d
  * @args: the variadic args
- * @count: this is a pointer to the original count variable in _printf
+ * @count: this is a pointer to the original count var in _printf
  */
 void handle_num(va_list args, int *count)
 {
 	int num = va_arg(args, int);
 	char arr[10];
-	int i;
+	int i = 0;
 
 	if (num < 0)
 	{
@@ -80,11 +80,11 @@ void handle_num(va_list args, int *count)
 		num = -num;
 	}
 
-	for (i = 0; num; i++)
+	do
 	{
-		arr[i] = '0' + (num % 10);
+		arr[i++] = '0' + (num % 10);
 		num /= 10;
-	}
+	} while (num);
 
 	for (i--; i >= 0; i--)
 	{
