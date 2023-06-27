@@ -1,4 +1,5 @@
 #include "main.h"
+#include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
 
@@ -40,15 +41,10 @@ func get_mod_function(char c)
  */
 void handle_str(va_list args, int *count)
 {
-	char *s;
+	const char *s;
 
 	s = va_arg(args, char *);
-	while (*s)
-	{
-		_putchar(*s);
-		s++;
-		*(count) += 1;
-	}
+	log_msg(s, count);
 }
 
 /**
@@ -61,8 +57,7 @@ void handle_char(va_list args, int *count)
 {
 	char c = (char)va_arg(args, int);
 
-	_putchar(c);
-	(*count) += 1;
+	_putchar_count(c, count);
 }
 
 /**
@@ -70,7 +65,6 @@ void handle_char(va_list args, int *count)
  * @args: the variadic args
  * @count: this is a pointer to the original count variable in _printf
  */
-
 void handle_num(va_list args, int *count)
 {
 	int num = va_arg(args, int), i = 0;
@@ -79,16 +73,25 @@ void handle_num(va_list args, int *count)
 
 	if (num < 0)
 	{
-		_putchar('-');
-		num = -num;
+		_putchar_count('-', count);
+
+		if (num != INT_MIN)
+			num = -num;
+		else
+		{
+			/* print the INT_MIN and exit early */
+			log_msg("2147483648", count);
+			return;
+		}
 	}
-	if (num == 0)
+	if (num == 0 || !num)
 	{
-		_putchar(num);
+		_putchar_count('0', count);
 		return;
 	}
 
 
+	/* actual number processing */
 	while (num != 0)
 	{
 		arr[i] = '0' + (num % 10);
@@ -97,8 +100,5 @@ void handle_num(va_list args, int *count)
 	}
 
 	while (i > 0)
-	{
-		_putchar(arr[--i]);
-		*(count) += 1;
-	}
+		_putchar_count(arr[--i], count);
 }

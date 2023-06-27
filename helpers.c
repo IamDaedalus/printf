@@ -25,5 +25,30 @@ void init_mod_check(const char ch, va_list list, int *count)
 
 	mod = get_mod_function(ch);
 	mod_check(list, mod, count);
+}
 
+/**
+ * log_msg - prints any text fed to it on the screen
+ * @msg: the message to prints
+ * @count: a pointer to the original printf count
+ */
+void log_msg(const char *msg, int *count)
+{
+	while (*msg)
+	{
+		_putchar_count(*msg, count);
+		msg++;
+	}
+}
+
+/**
+ * _putchar_count - prints a character and updates count
+ * @c: the character to print
+ * @count: a pointer to the original printf count
+ * Wrote this to "extend" the original _putchar in case we need it
+ */
+void _putchar_count(char c, int *count)
+{
+	_putchar(c);
+	*count += 1;
 }

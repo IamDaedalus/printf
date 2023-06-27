@@ -28,6 +28,8 @@ struct mod_property
 typedef struct mod_property modifier;
 
 int _printf(const char *format, ...);
+void log_msg(const char *msg, int *count);
+void _putchar_count(char c, int *count);
 int _putchar(char c);
 
 /** helpers **/
