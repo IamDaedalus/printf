@@ -7,10 +7,16 @@
  * @mod: the function pointer data type variable
  * @count: a pointer to the original printf count
  */
-void mod_check(va_list args, func mod, int *count)
+void mod_check(va_list args, func mod, int *count, char ch)
 {
 	if (mod)
 		mod(args, count);
+	else
+	{
+		/* hacky way to handle unknown formats but let's do this */
+		_putchar_count('%', count);
+		_putchar_count(ch, count);
+	}
 }
 
 /**
@@ -24,7 +30,7 @@ void init_mod_check(const char ch, va_list list, int *count)
 	func mod;
 
 	mod = get_mod_function(ch);
-	mod_check(list, mod, count);
+	mod_check(list, mod, count, ch);
 }
 
 /**
@@ -34,6 +40,9 @@ void init_mod_check(const char ch, va_list list, int *count)
  */
 void log_msg(const char *msg, int *count)
 {
+	if (!msg)
+		log_msg("(null)", count);
+
 	while (*msg)
 	{
 		_putchar_count(*msg, count);

@@ -24,6 +24,7 @@ int _printf(const char *format, ...)
 				if (format[i] == '%')
 					_putchar(format[i]);
 
+				/** find a way to send both % and the format specifier **/
 				init_mod_check(format[i], list, &count);
 			}
 			else

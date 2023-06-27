@@ -38,7 +38,7 @@ void handle_str(va_list args, int *count);
 void handle_num(va_list args, int *count);
 void handle_float(va_list args, int *count);
 void init_mod_check(const char ch, va_list list, int *count);
-void mod_check(va_list list, func mod, int *count);
+void mod_check(va_list list, func mod, int *count, char original);
 func get_mod_function(char c);
 
 #endif
