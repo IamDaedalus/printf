@@ -34,6 +34,12 @@ func get_mod_function(char c)
 	return (NULL);
 }
 
+void handle_bin(va_list args, int *count)
+{
+	(void)args;
+	(void)count;
+}
+
 /**
  * handle_str - handles %s
  * @args: the variadic args
@@ -44,7 +50,10 @@ void handle_str(va_list args, int *count)
 	const char *s;
 
 	s = va_arg(args, char *);
-	log_msg(s, count);
+	if (!s)
+		log_msg("(null)", count);
+	else
+		log_msg(s, count);
 }
 
 /**
@@ -55,7 +64,7 @@ void handle_str(va_list args, int *count)
 
 void handle_char(va_list args, int *count)
 {
-	char c = (char)va_arg(args, int);
+	char c = va_arg(args, int);
 
 	_putchar_count(c, count);
 }

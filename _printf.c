@@ -22,7 +22,7 @@ int _printf(const char *format, ...)
 				i++;
 
 				if (format[i] == '%')
-					_putchar(format[i]);
+					_putchar_count('%', &count);
 
 				/** find a way to send both % and the format specifier **/
 				init_mod_check(format[i], list, &count);

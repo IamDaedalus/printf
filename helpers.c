@@ -58,6 +58,6 @@ void log_msg(const char *msg, int *count)
  */
 void _putchar_count(char c, int *count)
 {
-	_putchar(c);
+	_putchar((char)c);
 	*count += 1;
 }
