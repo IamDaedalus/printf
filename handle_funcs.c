@@ -1,7 +1,9 @@
 #include "main.h"
+#include <stdio.h>
 #include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
+
 
 /**
  * get_mod_function - returns a function pointer to the appropriate
@@ -20,6 +22,7 @@ func get_mod_function(char c)
 		{ 'd', handle_num },
 		{ 'i', handle_num },
 		{ '%', handle_char },
+		{ 'R', handle_rot13 },
 	};
 
 	modifiers_len = sizeof(modifiers) / sizeof(modifiers[0]);
@@ -34,11 +37,23 @@ func get_mod_function(char c)
 	return (NULL);
 }
 
-void handle_bin(va_list args, int *count)
+void handle_rot13(va_list args, int *count)
 {
-	(void)args;
-	(void)count;
+	int i = 0;
+	char *s = va_arg(args, char *);
+
+	while (s[i] != '\0')
+	{
+		if ((s[i] >= 'a' && s[i] <= 'm') || (s[i] >= 'A' && s[i] <= 'M'))
+			_putchar_count(s[i] + 13, count);
+		else if ((s[i] >= 'n' && s[i] <= 'z') || (s[i] >= 'N' && s[i] <= 'Z'))
+			_putchar_count(s[i] - 13, count);
+		else
+			_putchar(s[i]);
+		i++;
+	}
 }
+
 
 /**
  * handle_str - handles %s
@@ -111,3 +126,4 @@ void handle_num(va_list args, int *count)
 	while (i > 0)
 		_putchar_count(arr[--i], count);
 }
+

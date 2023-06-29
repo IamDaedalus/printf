@@ -32,14 +32,21 @@ void log_msg(const char *msg, int *count);
 void _putchar_count(char c, int *count);
 int _putchar(char c);
 
-/** helpers **/
+/** handlers **/
 void handle_char(va_list args, int *count);
 void handle_str(va_list args, int *count);
 void handle_num(va_list args, int *count);
 void handle_float(va_list args, int *count);
-void handle_bin(va_list args, int *count);
+void handle_rot13(va_list args, int *count);
+
+/** helpers **/
 void init_mod_check(const char ch, va_list list, int *count);
 void mod_check(va_list list, func mod, int *count, char original);
 func get_mod_function(char c);
+
+/** converters **/
+char *reverse_str(char *s);
+char *rot13(char *c);
+
 
 #endif

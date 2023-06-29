@@ -41,7 +41,7 @@ void init_mod_check(const char ch, va_list list, int *count)
 void log_msg(const char *msg, int *count)
 {
 	if (!msg)
-		log_msg("(null)", count);
+		msg = "(null)";
 
 	while (*msg)
 	{
