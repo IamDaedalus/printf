@@ -38,6 +38,7 @@ void handle_str(va_list args, int *count);
 void handle_num(va_list args, int *count);
 void handle_float(va_list args, int *count);
 void handle_rot13(va_list args, int *count);
+void handle_reverse(va_list args, int *count);
 
 /** helpers **/
 void init_mod_check(const char ch, va_list list, int *count);

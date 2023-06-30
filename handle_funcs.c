@@ -2,41 +2,43 @@
 #include <stdio.h>
 #include <limits.h>
 #include <stdarg.h>
-#include <stdlib.h>
 
 
 /**
- * get_mod_function - returns a function pointer to the appropriate
- * function for the modifier c
- * @c: the modifier as a char
- * Return: returns the function pointer to the associated func
+ * handle_reverse - handles the %r for reversing string
+ * @args: the args as a va_list
+ * @count: the original printf scan
  */
-func get_mod_function(char c)
+void handle_reverse(va_list args, int *count)
 {
-	int i = 0;
-	int modifiers_len = 0;
+	char *str = va_arg(args, char *);
+	/* get range */
+	char *start = str;
+	char *end = start + strlen(str) - 1; /* -1 for \0 */
+	char temp;
 
-	modifier modifiers[] = {
-		{ 's', handle_str },
-		{ 'c', handle_char },
-		{ 'd', handle_num },
-		{ 'i', handle_num },
-		{ '%', handle_char },
-		{ 'R', handle_rot13 },
-	};
-
-	modifiers_len = sizeof(modifiers) / sizeof(modifiers[0]);
-	while (i < modifiers_len)
+	/* reverse */
+	while (end > start)
 	{
-		if (modifiers[i].modifier == c)
-			return (modifiers[i].method);
+		/* swap */
+		temp = *start;
+		*start = *end;
+		*end = temp;
 
-		i++;
+		/* move */
+		++start;
+		--end;
 	}
 
-	return (NULL);
+	log_msg(start, count);
 }
 
+
+/**
+ * handle_rot13 - returns the rot13'd string of input
+ * @args: the va_list
+ * @count: the count of the original printf
+ */
 void handle_rot13(va_list args, int *count)
 {
 	int i = 0;

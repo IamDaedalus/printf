@@ -1,6 +1,39 @@
 #include "main.h"
 #include <stdarg.h>
 
+
+/**
+ * get_mod_function - returns a function pointer to the appropriate
+ * function for the modifier c
+ * @c: the modifier as a char
+ * Return: returns the function pointer to the associated func
+ */
+func get_mod_function(char c)
+{
+	int i = 0;
+	int modifiers_len = 0;
+
+	modifier modifiers[] = {
+		{ 's', handle_str },
+		{ 'c', handle_char },
+		{ 'd', handle_num },
+		{ 'i', handle_num },
+		{ '%', handle_char },
+		{ 'R', handle_rot13 },
+	};
+
+	modifiers_len = sizeof(modifiers) / sizeof(modifiers[0]);
+	while (i < modifiers_len)
+	{
+		if (modifiers[i].modifier == c)
+			return (modifiers[i].method);
+
+		i++;
+	}
+
+	return (NULL);
+}
+
 /**
  * mod_check - checks if the func returns an actual function pointer
  * @args: the variadic list of functions that we pass to associataed methods
